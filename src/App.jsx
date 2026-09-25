@@ -11,6 +11,7 @@ function App() {
   const [nome, setNome] = useState(' ');
   const [preco, setPreco] = useState(' ');
   const [emPromocao, setEmPromocao] = useState(false);
+  const [categoria, setCategoria]=useState('Fones In-Ear');
 
   //4. Função que é disparada quando clicamos no botão "Cadastrar".
   const adicionarProduto = (evento) => {
@@ -21,7 +22,7 @@ function App() {
       id: listaProdutos.length + 1, // Gera um ID sequencial
       nome: nome,
       preco: parseFloat(preco), // Garante que o preço seja sempre  um número decimal
-      categoria: "Fones In-Ear",
+      categoria: categoria, // Alterado de "fones In-Ear" para a variável categoria 
       emPromocao: emPromocao
 
       };
@@ -52,7 +53,7 @@ function App() {
       </h2>
 
       {/* --- INÍCIO DO FORMULÁRIO --- */}
-      <div style={{
+     <div style={{
         backgroundColor: '#1a1a1a',
         padding: '20px',
         borderRadius: '8px',
@@ -62,48 +63,57 @@ function App() {
         <h3>Adicionar Novo Equipamento</h3>
 
         {/* Quando o formulário é eviado, ele chama a função adicionarProduto */}
-        <form onSubmit={adicionarProduto} style={{ display: 'flex', gap: '15px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', padding: '10px' }}>
-          
-  <input 
-    type="text" 
-    placeholder="Nome (ex: KZ PR3)" 
-    value={nome}
-    onChange={(e) => setNome(e.target.value)}
-    required
-    style={{ padding: '10px', borderRadius: '4px', border: '1px solid #555', minWidth: '220px', backgroundColor: '#2a2a2a', color: 'white' }}
-  />
+      <form onSubmit={adicionarProduto} style={{ display: 'flex', gap: '15px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', padding: '10px' }}>
+        <select
+          value={categoria}
+          onChange={(e) => setCategoria(e.target.value)}
+          style={{padding: '10px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#2a2a2a', color: 'white', cursor: 'pointer'}}
+        >
+          <option value= 'Fones In-ear'>Fones In-Ear</option>
+          <option value= 'DACs e Amps'>Dacs e Amps</option>
+          <option value= 'Cabos e Acessórios'>Cabos e Acessórios</option>
+          <option value= 'Rádios Portáteis'>Rádios Portáteis</option>
+        </select>  
+        <input 
+          type="text" 
+          placeholder="Nome (ex: KZ PR3)" 
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          required
+          style={{ padding: '10px', borderRadius: '4px', border: '1px solid #555', minWidth: '220px', backgroundColor: '#2a2a2a', color: 'white' }}
+        />
   
-  <input 
-    type="number" 
-    placeholder="Preço (R$)" 
-    value={preco}
-    onChange={(e) => setPreco(e.target.value)}
-    required
-    min="0"
-    step="0.01"
-    style={{ padding: '10px', borderRadius: '4px', border: '1px solid #555', minWidth: '120px', backgroundColor: '#2a2a2a', color: 'white' }}
-  />
+        <input 
+          type="number" 
+          placeholder="Preço (R$)" 
+          value={preco}
+          onChange={(e) => setPreco(e.target.value)}
+          required
+          min="0"
+          step="0.01"
+          style={{ padding: '10px', borderRadius: '4px', border: '1px solid #555', minWidth: '120px', backgroundColor: '#2a2a2a', color: 'white' }}
+        />
   
-  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-    <input 
-      type="checkbox" 
-      checked={emPromocao}
-      onChange={(e) => setEmPromocao(e.target.checked)}
-      style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-    />
-    Em Promoção?
-  </label>
+        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+          <input 
+            type="checkbox" 
+            checked={emPromocao}
+            onChange={(e) => setEmPromocao(e.target.checked)}
+            style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+          />
+         Em Promoção?
+        </label>
   
-  <button type="submit" style={{ padding: '10px 25px', backgroundColor: '#646cff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-    Cadastrar
-  </button>
-</form>
-      </div>
+        <button type="submit" style={{ padding: '10px 25px', backgroundColor: '#646cff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+          Cadastrar
+        </button>
+      </form>
+    </div>
       {/* ---FIM DO FORMULÁRIO ---}
 
       {/* Renderização dos cards */}
 
-      <div style={{display:'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center'}}>
+    <div style={{display:'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center'}}>
         {listaProdutos.map(produto =>(
         <ProdutoCard
           key={produto.id}
