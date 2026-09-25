@@ -1,16 +1,12 @@
 export function ProdutoCard({nome, preco, categoria,emPromocao, children}) {
-    return (
-        <div style={{
-            border: '1px solif #646cff',
-            padding: '20px',
-            borderRadius: '8px',
-            width: '250px',
-            backgroundColor: '#1a1a1a',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
+    
 
-            }}>
+        const classeDoCartao = emPromocao ? 'produto-card produto-promocao' : 'produto-card';
+        
+        
+        return(
+        <div className={classeDoCartao}> 
+
             <div>
                 <h3 style={{margin: '0 0 10px 0'}}>{nome}</h3>
                 <p style={{margin: '5px 0' }}>Categoria:{categoria}</p>
@@ -19,9 +15,9 @@ export function ProdutoCard({nome, preco, categoria,emPromocao, children}) {
             </p>
                  {/* Condicional JSX com Operador Ternário */}
                  {   emPromocao ? (
-                <span stylr={{ color: '#4ade80', fontWeight: 'bold' }}>Em Promoção</span>
+                <span style={{ color: '#4ade80', fontWeight: 'bold' }}>Em Promoção</span>
                 ) : (
-                <span stylr={{ color: '#a1a1aa' }}>Preço Normal</span>
+                <span style={{ color: '#a1a1aa' }}>Preço Normal</span>
                 )}                                                      
             </div>
 
@@ -31,5 +27,8 @@ export function ProdutoCard({nome, preco, categoria,emPromocao, children}) {
              </div>
 
         </div>
-);
+
+
+        );
+            
 }

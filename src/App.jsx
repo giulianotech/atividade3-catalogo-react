@@ -57,7 +57,7 @@ function App() {
         backgroundColor: '#1a1a1a',
         padding: '20px',
         borderRadius: '8px',
-        marginBotton: '30px',
+        marginBottom: '30px',
         border: '1px solid #4ade80'
       }}>
         <h3>Adicionar Novo Equipamento</h3>
