@@ -103,15 +103,28 @@ function App() {
 
       {/* Renderização dos cards */}
 
-      <div style={{display:'flex', flexWrap: 'wrap', gap: '20px'}}>
+      <div style={{display:'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center'}}>
         {listaProdutos.map(produto =>(
-          <ProdutoCard
+        <ProdutoCard
           key={produto.id}
           nome={produto.nome}
           preco={produto.preco}
           categoria={produto.categoria}
           emPromocao={produto.emPromocao}
-        />
+        >
+        {/* O conteúdo aqui dentro é passado automaticamente como "Children" */}
+        <button style={{
+          width: '100',
+          padding: '10px',
+          backgroundColor:'#22c55e',
+          color: 'white',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontWeight: 'bold'
+        }}>
+          Comprar
+        </button>
+      </ProdutoCard>
       ))}
     </div> 
    </div>
