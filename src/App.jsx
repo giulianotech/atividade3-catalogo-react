@@ -12,6 +12,8 @@ function App() {
   const [preco, setPreco] = useState(' ');
   const [emPromocao, setEmPromocao] = useState(false);
   const [categoria, setCategoria]=useState('Fones In-Ear');
+  const [termoBusca, setTermoBusca] = useState(' ');
+  const [filtroCategoria, setFiltroCategoria ] = useState ('Todas');
 
   //4. Função que é disparada quando clicamos no botão "Cadastrar".
   const adicionarProduto = (evento) => {
@@ -39,104 +41,122 @@ function App() {
 
   // Cálculo do reduce agora olha para a "listaProdutos" (que é o estado)
   const precoTotal = listaProdutos.reduce((acumulador, produto) => acumulador + produto.preco, 0);
+
+  // Lógica para fitrar a lista de produtos
+    const produtosFiltrados = listaProdutos.filter((produto) => {
+    const correspondeBusca = produto.nome.toLowerCase().includes(termoBusca.trim().toLowerCase());
+    const correspondeCategoria = filtroCategoria === 'Todas' || produto.categoria.toLowerCase() === filtroCategoria.toLowerCase();
+    return correspondeBusca && correspondeCategoria;
+  });
   return (
-    <div style={{padding: '20px', fontFamily: 'Arial, sans-serif'}}>
+    <div className='app-container'>
       <h1>Catálogo de equipamentos de Áudio</h1>
 
       {/* Resposta do requsito 1: Evolução do Front-End*/}
-     <p style={{ fontStyle: 'italic', color: '#888', maxWidth: '600px', margin: '0 auto 30px auto', textAlign: 'center', marginBottom: '20px',  }}>
+     <p className='texto-reflexao'>
         <strong>Reflexão - Evolução do Front-End:</strong> Manipular dados no console com JavaScript puro serve para testar a lógica oculta. Com o React, conseguimos pegar essa mesma lógica e transformá-la  em numa interface visual interativa para o utilizador, atualizando o ecrã de forma dinâmica (como no formulário abaixo) sem necessidade de recarregar a página.
       </p>
 
-      <h2 style={{color: '#646cff'}}>
+      <h2 className='titulo-valor'>
         Valor Total do Catálogo: R$ {precoTotal.toFixed(2)}
       </h2>
 
       {/* --- INÍCIO DO FORMULÁRIO --- */}
-     <div style={{
-        backgroundColor: '#1a1a1a',
-        padding: '20px',
-        borderRadius: '8px',
-        marginBottom: '30px',
-        border: '1px solid #4ade80'
-      }}>
-        <h3>Adicionar Novo Equipamento</h3>
+        <div className='formulario-container'>
+          <h3>Adicionar Novo Equipamento</h3>
 
-        {/* Quando o formulário é eviado, ele chama a função adicionarProduto */}
-      <form onSubmit={adicionarProduto} style={{ display: 'flex', gap: '15px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', padding: '10px' }}>
-        <select
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-          style={{padding: '10px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#2a2a2a', color: 'white', cursor: 'pointer'}}
-        >
-          <option value= 'Fones In-ear'>Fones In-Ear</option>
-          <option value= 'DACs e Amps'>Dacs e Amps</option>
-          <option value= 'Cabos e Acessórios'>Cabos e Acessórios</option>
-          <option value= 'Rádios Portáteis'>Rádios Portáteis</option>
-        </select>  
-        <input 
-          type="text" 
-          placeholder="Nome (ex: KZ PR3)" 
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          required
-          style={{ padding: '10px', borderRadius: '4px', border: '1px solid #555', minWidth: '220px', backgroundColor: '#2a2a2a', color: 'white' }}
-        />
+         {/* Quando o formulário é eviado, ele chama a função adicionarProduto */}
+          <form onSubmit={adicionarProduto} className='formulario'>
+            <select
+             value={categoria}
+             onChange={(e) => setCategoria(e.target.value)}
+              className='input-form'
+              >
+              <option value= 'Fones In-ear'>Fones In-Ear</option>
+              <option value= 'DACs e Amps'>Dacs e Amps</option>
+              <option value= 'Cabos e Acessórios'>Cabos e Acessórios</option>
+              <option value= 'Rádios Portáteis'>Rádios Portáteis</option>
+           </select>  
+           <input 
+             type="text" 
+             placeholder="Nome (ex: KZ PR3)" 
+             value={nome}
+             onChange={(e) => setNome(e.target.value)}
+             required
+             className='input-form'
+         
+            />
   
-        <input 
-          type="number" 
-          placeholder="Preço (R$)" 
-          value={preco}
-          onChange={(e) => setPreco(e.target.value)}
-          required
-          min="0"
-          step="0.01"
-          style={{ padding: '10px', borderRadius: '4px', border: '1px solid #555', minWidth: '120px', backgroundColor: '#2a2a2a', color: 'white' }}
-        />
+            <input 
+              type="number" 
+              laceholder="Preço (R$)" 
+              value={preco}
+              onChange={(e) => setPreco(e.target.value)}
+              required
+              min="0"
+              step="0.01"
+              className='input-form'
+           />
   
-        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-          <input 
-            type="checkbox" 
-            checked={emPromocao}
-            onChange={(e) => setEmPromocao(e.target.checked)}
-            style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-          />
-         Em Promoção?
-        </label>
+            <label className='label-checkbox'>
+              <input 
+                type="checkbox" 
+                checked={emPromocao}
+                onChange={(e) => setEmPromocao(e.target.checked)}
+                className='input-checkbox'
+              />
+              Em Promoção?
+            </label>
   
-        <button type="submit" style={{ padding: '10px 25px', backgroundColor: '#646cff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-          Cadastrar
-        </button>
-      </form>
+            <button type="submit" className='btn-cadastrar'>
+            Cadastrar
+
+            </button>
+          </form>
     </div>
-      {/* ---FIM DO FORMULÁRIO ---}
+    {/* ---FIM DO FORMULÁRIO ---}
+    {/* Controle de Pesquisa e Filtro */}  
+    <div className='filtros-container'>
+      <input
+        type='text'
+        placeholder='buscar equipamento...'
+        value={termoBusca}
+        onChange={(e) => setTermoBusca(e.target.value)}
+        className='campo-filtro input-busca'
+      />
+        <select
+          value={filtroCategoria}
+          onChange={(e) => setFiltroCategoria(e.target.value)}
+          className='campo-filtro select-categoria'
+      
+          >
+          <option value="Todas">Todas as categorias</option>
+          <option value="Fones In-Ear">Fones In-Ear</option>
+          <option value="DACs e Amps">DACs e Amps</option>
+          <option value="Cabos e Acessórios">Cabos e Acessórios</option>
+          <option value="Rádios Portáteis">Rádios Portáteis</option>
 
+
+        </select>
+      </div>
       {/* Renderização dos cards */}
 
-    <div style={{display:'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center'}}>
-        {listaProdutos.map(produto =>(
+      <div className='catalogo-grid'>
+        {produtosFiltrados.map(produto =>(
         <ProdutoCard
           key={produto.id}
           nome={produto.nome}
           preco={produto.preco}
           categoria={produto.categoria}
           emPromocao={produto.emPromocao}
-        >
-        {/* O conteúdo aqui dentro é passado automaticamente como "Children" */}
-        <button style={{
-          width: '100',
-          padding: '10px',
-          backgroundColor:'#22c55e',
-          color: 'white',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontWeight: 'bold'
-        }}>
+         >
+          {/* O conteúdo aqui dentro é passado automaticamente como "Children" */}
+          <button className='btn-comprar'>
           Comprar
-        </button>
-      </ProdutoCard>
-      ))}
-    </div> 
+         </button>
+        </ProdutoCard>
+        ))}
+      </div> 
    </div>
   );
 }
